@@ -1,7 +1,9 @@
 import { redirect } from "next/navigation";
-import { initialProfile } from "@/lib/initial-profile";
+
 import { db } from "@/lib/db";
-import { InitialModal } from "@/components/modals/intital-modal";
+import { initialProfile } from "@/lib/initial-profile";
+import CreateServerModal from "@/components/modals/create-server-modal";
+import { InitialModal } from "@/components/modals/initial-modal";
 
 const SetupPage = async () => {
     const profile = await initialProfile();
@@ -10,17 +12,17 @@ const SetupPage = async () => {
         where: {
             members: {
                 some: {
-                    profileId: profile.id
-                }
-            }
-        }
+                    profileId: profile.id,
+                },
+            },
+        },
     });
 
-    if(server){
+    if (server) {
         return redirect(`/servers/${server.id}`);
     }
 
-    return <InitialModal />
-}
+    return <InitialModal />;
+};
 
 export default SetupPage;
